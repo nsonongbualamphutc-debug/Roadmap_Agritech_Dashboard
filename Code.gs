@@ -265,9 +265,9 @@ function setupSheets() {
   const userSheet = getOrCreateSheet(SHEET_NAME_USERS, USER_HEADERS);
   if (userSheet.getLastRow() <= 1) {
     userSheet.getRange(2, 1, 1, USER_HEADERS.length).setValues([
-      ['admin', 'admin1234', 'admin', 'สนง.สถิติจังหวัด', new Date().toLocaleString('th-TH')]
+      ['ARG001', '039001', 'admin', 'ผู้ดูแลระบบ', new Date().toLocaleString('th-TH')]
     ]);
   }
 
-  SpreadsheetApp.getUi().alert('✅ สร้าง Sheet ทั้งหมดเรียบร้อย!\n\nSheet ที่สร้าง:\n• KPIData\n• KPIHistory\n• Users\n\nAdmin เริ่มต้น: admin / admin1234');
+  SpreadsheetApp.getUi().alert('✅ สร้าง Sheet ทั้งหมดเรียบร้อย!\n\nSheet ที่สร้าง:\n• KPIData\n• KPIHistory\n• Users\n\nAdmin เริ่มต้น: ARG001 / 039001');
 }
