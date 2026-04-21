@@ -148,14 +148,6 @@ body {
   box-shadow: 0 8px 30px rgba(0,230,118,0.4);
 }
 
-.login-mode-toggle {
-  text-align: center; margin-top: 16px;
-  font-size: 13px; color: var(--text-muted);
-}
-.login-mode-toggle a {
-  color: var(--accent-green); cursor: pointer;
-  text-decoration: none; font-weight: 600;
-}
 .login-error {
   color: #ff5252; font-size: 13px; text-align: center;
   margin-top: 10px; min-height: 20px;
@@ -655,38 +647,7 @@ canvas { max-width: 100%; }
         <input type="password" id="loginPass" placeholder="กรอกรหัสผ่าน">
       </div>
       <button class="btn-login" onclick="doLogin()">เข้าสู่ระบบ</button>
-      <div class="login-mode-toggle">
-        ยังไม่มีบัญชี? <a onclick="showRegister()">สมัครสมาชิก</a>
-      </div>
       <div class="login-error" id="loginError"></div>
-    </div>
-
-    <div id="registerForm" style="display:none">
-      <div class="form-group">
-        <label>ชื่อผู้ใช้ใหม่</label>
-        <input type="text" id="regUser" placeholder="กรอกชื่อผู้ใช้">
-      </div>
-      <div class="form-group">
-        <label>รหัสผ่าน</label>
-        <input type="password" id="regPass" placeholder="กรอกรหัสผ่าน">
-      </div>
-      <div class="form-group">
-        <label>หน่วยงาน</label>
-        <select id="regAgency">
-          <option value="">-- เลือกหน่วยงาน --</option>
-          <option value="สนง.เกษตรและสหกรณ์จังหวัด">สนง.เกษตรและสหกรณ์จังหวัด</option>
-          <option value="สนง.พัฒนาชุมชนจังหวัด">สนง.พัฒนาชุมชนจังหวัด</option>
-          <option value="สนง.พาณิชย์จังหวัด">สนง.พาณิชย์จังหวัด</option>
-          <option value="สนง.เกษตรจังหวัด">สนง.เกษตรจังหวัด</option>
-          <option value="สนง.สถิติจังหวัด">สนง.สถิติจังหวัด</option>
-          <option value="อื่นๆ">อื่นๆ</option>
-        </select>
-      </div>
-      <button class="btn-login" onclick="doRegister()">สมัครสมาชิก</button>
-      <div class="login-mode-toggle">
-        มีบัญชีแล้ว? <a onclick="showLogin()">เข้าสู่ระบบ</a>
-      </div>
-      <div class="login-error" id="regError"></div>
     </div>
   </div>
 </div>
@@ -776,9 +737,15 @@ canvas { max-width: 100%; }
     </div>
   </div>
 
-</div>
+  <!-- FOOTER -->
+  <div style="text-align:center; padding:30px 20px 16px; margin-top:20px; border-top:1px solid rgba(0,230,118,0.1);">
+    <div style="font-size:12px; color:var(--text-muted); line-height:1.8;">
+      ผู้จัดทำและดูแลระบบ: <span style="color:var(--accent-gold); font-weight:500;">สำนักงานสถิติจังหวัดหนองบัวลำภู</span><br>
+      สำนักงานสถิติแห่งชาติ กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม
+    </div>
+  </div>
 
-<!-- Chart.js -->
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
 <script>
@@ -795,7 +762,7 @@ const STRATEGIES = [
     id: 'strategy1',
     num: 1,
     title: 'ส่งเสริมและยกระดับการผลิตสู่มาตรฐานเกษตรมูลค่าสูง',
-    agency: 'สนง.เกษตรและสหกรณ์จังหวัด',
+    agency: 'สำนักงานเกษตรและสหกรณ์จังหวัดหนองบัวลำภู',
     icon: '🌱',
     period: '1 ต.ค. 2567 – 30 ก.ย. 2569',
     kpis: [
@@ -807,7 +774,7 @@ const STRATEGIES = [
     id: 'strategy2',
     num: 2,
     title: 'การแปรรูปและสร้างมูลค่าเพิ่ม',
-    agency: 'สนง.พัฒนาชุมชนจังหวัด',
+    agency: 'สำนักงานพัฒนาชุมชนจังหวัดหนองบัวลำภู',
     icon: '🏭',
     period: '1 ต.ค. 2567 – 30 ก.ย. 2569',
     kpis: [
@@ -820,7 +787,7 @@ const STRATEGIES = [
     id: 'strategy3',
     num: 3,
     title: 'การพัฒนาการตลาดและสร้างแบรนด์',
-    agency: 'สนง.พาณิชย์จังหวัด',
+    agency: 'สำนักงานพาณิชย์จังหวัดหนองบัวลำภู',
     icon: '📈',
     period: '1 ต.ค. 2567 – 30 ก.ย. 2568',
     kpis: [
@@ -833,7 +800,7 @@ const STRATEGIES = [
     id: 'strategy4',
     num: 4,
     title: 'การสร้างความเข้มแข็งให้เกษตรกรและสถาบันเกษตร',
-    agency: 'สนง.เกษตรจังหวัด',
+    agency: 'สำนักงานเกษตรจังหวัดหนองบัวลำภู',
     icon: '💪',
     period: '1 ต.ค. 2567 – 30 ก.ย. 2568',
     kpis: [
@@ -907,20 +874,15 @@ function initParticles() {
 // AUTH
 // ============================================================
 let users = JSON.parse(localStorage.getItem('agri_users') || 'null') || [
-  { username: 'admin', password: 'admin79210', role: 'admin', agency: 'สนง.สถิติจังหวัด' }
+  { username: 'admin', password: 'admin79210', role: 'admin', agency: 'ผู้ดูแลระบบ' },
+  { username: 'ARG002', password: '039052', role: 'user', agency: 'สำนักงานเกษตรและสหกรณ์จังหวัดหนองบัวลำภู' },
+  { username: 'ARG003', password: '039103', role: 'user', agency: 'สำนักงานพัฒนาชุมชนจังหวัดหนองบัวลำภู' },
+  { username: 'ARG004', password: '539004', role: 'user', agency: 'สำนักงานพาณิชย์จังหวัดหนองบัวลำภู' },
+  { username: 'ARG005', password: '039705', role: 'user', agency: 'สำนักงานเกษตรจังหวัดหนองบัวลำภู' }
 ];
 
 function saveUsersLocal() {
   localStorage.setItem('agri_users', JSON.stringify(users));
-}
-
-function showRegister() {
-  document.getElementById('loginForm').style.display = 'none';
-  document.getElementById('registerForm').style.display = 'block';
-}
-function showLogin() {
-  document.getElementById('registerForm').style.display = 'none';
-  document.getElementById('loginForm').style.display = 'block';
 }
 
 function doLogin() {
@@ -933,26 +895,12 @@ function doLogin() {
   enterApp();
 }
 
-function doRegister() {
-  const u = document.getElementById('regUser').value.trim();
-  const p = document.getElementById('regPass').value.trim();
-  const a = document.getElementById('regAgency').value;
-  if (!u || !p || !a) { document.getElementById('regError').textContent = 'กรุณากรอกข้อมูลให้ครบ'; return; }
-  if (users.find(x => x.username === u)) { document.getElementById('regError').textContent = 'ชื่อผู้ใช้นี้มีอยู่แล้ว'; return; }
-  const newUser = { username: u, password: p, role: 'user', agency: a };
-  users.push(newUser);
-  saveUsersLocal();
-  currentUser = newUser;
-  enterApp();
-}
-
 function doLogout() {
   currentUser = null;
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('loginOverlay').classList.remove('hidden');
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
-  showLogin();
 }
 
 function enterApp() {
