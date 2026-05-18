@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กรอกข้อมูล Roadmap เกษตรเพิ่มมูลค่า | จ.หนองบัวลำภู</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f4f3;
+  --bg-card: #ffffff;
+  --bg-header: linear-gradient(135deg, #1b5e20 0%, #2e7d32 40%, #43a047 100%);
+  --green-dark: #1b5e20;
+  --green-mid: #2e7d32;
+  --green: #43a047;
+  --green-light: #e8f5e9;
+  --green-accent: #00c853;
+  --gold: #f9a825;
+  --gold-light: #fff8e1;
+  --text: #212121;
+  --text-secondary: #616161;
+  --text-muted: #9e9e9e;
+  --border: #e0e0e0;
+  --danger: #e53935;
+  --danger-light: #ffebee;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Sarabun', 'Kanit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ===== LOGIN ===== */
+.login-page {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+  position: relative; overflow: hidden;
+}
+.login-page::before {
+  content: ''; position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+  top: -200px; right: -200px; border-radius: 50%;
+}
+.login-page::after {
+  content: ''; position: absolute; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(249,168,37,0.08) 0%, transparent 70%);
+  bottom: -100px; left: -100px; border-radius: 50%;
+}
+.login-box {
+  position: relative; z-index: 2;
+  width: 400px; max-width: 92vw;
+  background: #fff;
+  border-radius: 20px;
+  padding: 44px 36px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.login-icon {
+  width: 64px; height: 64px; margin: 0 auto 16px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px;
+}
+.login-box h2 {
+  font-family: 'Kanit'; font-weight: 700; font-size: 20px;
+  text-align: center; color: var(--green-dark);
+  margin-bottom: 4px;
+}
+.login-box .login-sub {
+  text-align: center; font-size: 13px; color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--text-secondary); margin-bottom: 5px;
+}
+.field input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Sarabun'; font-size: 14px;
+  color: var(--text); outline: none;
+  transition: border 0.3s;
+}
+.field input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(67,160,71,0.12); }
+.btn-login {
+  width: 100%; padding: 12px;
+  background: var(--bg-header);
+  border: none; border-radius: var(--radius-sm);
+  color: #fff; font-family: 'Kanit'; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.3s;
+  margin-top: 4px;
+}
+.btn-login:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(27,94,32,0.3); }
+.login-error {
+  color: var(--danger); font-size: 13px; text-align: center;
+  margin-top: 10px; min-height: 18px;
+}
+
+/* ===== APP SHELL ===== */
+.app { display: none; }
+.app.active { display: block; }
+.topbar {
+  background: var(--bg-header);
+  padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.topbar-left {
+  display: flex; align-items: center; gap: 12px;
+}
+.topbar-logo { font-size: 28px; }
+.topbar-title {
+  font-family: 'Kanit'; color: #fff;
+}
+.topbar-title h1 { font-size: 17px; font-weight: 700; line-height: 1.2; }
+.topbar-title p { font-size: 12px; opacity: 0.8; font-weight: 300; }
+.topbar-right {
+  display: flex; align-items: center; gap: 10px;
+}
+.user-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.15);
+  padding: 6px 14px; border-radius: 20px;
+  color: #fff; font-size: 13px;
+}
+.user-chip .chip-role {
+  background: var(--gold);
+  color: #1a1a1a; padding: 2px 8px; border-radius: 10px;
+  font-size: 11px; font-weight: 700;
+}
+.btn-logout-top {
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  color: #fff; font-family: 'Sarabun'; font-size: 13px;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-logout-top:hover { background: rgba(255,255,255,0.25); }
+
+/* ===== CONTENT ===== */
+.content { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+
+.section-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+  animation: slideUp 0.5s ease-out both;
+}
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(16px); }
+  to { opacity:1; transform: translateY(0); }
+}
+.section-card:nth-child(2) { animation-delay: 0.1s; }
+.section-card:nth-child(3) { animation-delay: 0.2s; }
+.section-card:nth-child(4) { animation-delay: 0.3s; }
+
+.section-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 22px;
+  background: var(--green-light);
+  border-bottom: 2px solid #c8e6c9;
+}
+.section-num {
+  width: 36px; height: 36px;
+  background: var(--bg-header);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-family: 'Kanit'; font-weight: 800; font-size: 16px;
+  flex-shrink: 0;
+}
+.section-info h3 {
+  font-family: 'Kanit'; font-size: 15px; font-weight: 600;
+  color: var(--green-dark);
+}
+.section-info p {
+  font-size: 12px; color: var(--text-muted); margin-top: 2px;
+}
+.section-agency {
+  margin-left: auto;
+  padding: 4px 12px;
+  background: var(--gold-light);
+  border: 1px solid #ffe082;
+  border-radius: 12px;
+  font-size: 12px; color: #e65100; font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ===== KPI ENTRY ===== */
+.kpi-entry {
+  padding: 18px 22px;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background 0.2s;
+}
+.kpi-entry:last-child { border-bottom: none; }
+.kpi-entry:hover { background: #fafffe; }
+.kpi-entry-header {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 14px;
+}
+.kpi-badge {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  background: var(--green);
+  color: #fff; border-radius: 6px;
+  font-family: 'Kanit'; font-size: 12px; font-weight: 700;
+}
+.kpi-name {
+  font-size: 14px; font-weight: 500; color: var(--text);
+  line-height: 1.4;
+}
+.kpi-target-label {
+  margin-left: auto; flex-shrink: 0;
+  padding: 3px 10px;
+  background: var(--gold-light);
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  font-size: 12px; color: #e65100; font-weight: 500;
+}
+.kpi-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.kpi-field label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--text-secondary); margin-bottom: 4px;
+}
+.kpi-field input, .kpi-field select {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Sarabun'; font-size: 14px;
+  color: var(--text); outline: none;
+  transition: border 0.2s;
+  background: #fff;
+}
+.kpi-field input:focus, .kpi-field select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(67,160,71,0.1);
+}
+.kpi-field .computed {
+  background: var(--green-light);
+  border-color: #a5d6a7;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-align: center;
+  pointer-events: none;
+}
+.kpi-field .computed.negative {
+  background: var(--danger-light);
+  border-color: #ef9a9a;
+  color: var(--danger);
+}
+
+/* ===== ACTIONS ===== */
+.actions-sticky {
+  position: sticky; bottom: 0;
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex; justify-content: center; gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  z-index: 50;
+}
+.btn {
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: 'Kanit'; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+  border: none;
+}
+.btn-primary { background: var(--bg-header); color: #fff; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(27,94,32,0.3); }
+.btn-secondary { background: #fff; color: var(--green-dark); border: 1.5px solid var(--green); }
+.btn-secondary:hover { background: var(--green-light); }
+.btn-gold { background: linear-gradient(135deg, #f9a825, #fbc02d); color: #1a1a1a; }
+.btn-gold:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-admin { background: #f3e5f5; color: #7b1fa2; border: 1.5px solid #ce93d8; }
+.btn-admin:hover { background: #e1bee7; }
+
+/* ===== ADMIN PANEL ===== */
+.admin-panel {
+  display: none;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px; margin-bottom: 24px;
+  border: 2px solid #ce93d8;
+}
+.admin-panel.show { display: block; animation: slideUp 0.3s ease-out; }
+.admin-panel h3 {
+  font-family: 'Kanit'; font-size: 17px; font-weight: 700;
+  color: #7b1fa2; margin-bottom: 16px;
+}
+.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.admin-table th {
+  background: #f3e5f5; padding: 10px 12px;
+  text-align: left; font-family: 'Kanit'; font-weight: 600;
+  color: #7b1fa2; font-size: 13px;
+}
+.admin-table td { padding: 8px 10px; border-bottom: 1px solid #f5f5f5; }
+.admin-table input, .admin-table select {
+  width: 100%; padding: 7px 10px;
+  border: 1px solid var(--border); border-radius: 6px;
+  font-family: 'Sarabun'; font-size: 13px;
+}
+.btn-sm {
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 12px; cursor: pointer; border: none;
+  font-family: 'Sarabun'; font-weight: 600;
+}
+.btn-del { background: var(--danger-light); color: var(--danger); }
+.btn-add { background: #f3e5f5; color: #7b1fa2; border: 1px solid #ce93d8; padding: 8px 16px; margin-top: 12px; border-radius: 8px; cursor: pointer; font-family: 'Kanit'; font-weight: 600; }
+
+/* ===== TOAST ===== */
+.toast-entry {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(60px);
+  padding: 12px 24px;
+  background: var(--green-dark); color: #fff;
+  border-radius: 10px; font-size: 14px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  z-index: 9999; white-space: nowrap;
+}
+.toast-entry.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast-entry.error { background: var(--danger); }
+
+/* ===== STATUS BADGE ===== */
+.last-saved {
+  text-align: center; font-size: 12px; color: var(--text-muted);
+  padding: 8px; margin-bottom: 16px;
+}
+
+/* ===== LINK TO DASHBOARD ===== */
+.link-dashboard {
+  text-align: center; margin-bottom: 20px;
+}
+.link-dashboard a {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 20px;
+  background: var(--green-light);
+  border: 1.5px solid #a5d6a7;
+  border-radius: 10px;
+  color: var(--green-dark);
+  text-decoration: none;
+  font-family: 'Kanit'; font-size: 13px; font-weight: 600;
+  transition: all 0.2s;
+}
+.link-dashboard a:hover { background: #c8e6c9; }
+
+/* ===== FOOTER ===== */
+.footer-entry {
+  text-align: center; padding: 20px; margin-top: 20px;
+  font-size: 12px; color: var(--text-muted); line-height: 1.7;
+}
+.footer-entry span { color: var(--green-dark); font-weight: 600; }
+
+@media (max-width: 600px) {
+  .topbar { padding: 12px 14px; }
+  .topbar-title h1 { font-size: 14px; }
+  .content { padding: 14px 10px 80px; }
+  .kpi-fields { grid-template-columns: 1fr 1fr; }
+  .section-header { flex-wrap: wrap; }
+  .section-agency { margin-left: 0; }
+  .user-chip { font-size: 12px; padding: 4px 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div class="login-page" id="loginPage">
+  <div class="login-box">
+    <div class="login-icon">🌾</div>
+    <h2>ระบบกรอกข้อมูล Roadmap</h2>
+    <div class="login-sub">เกษตรเพิ่มมูลค่าด้วยเทคโนโลยีและนวัตกรรม • จ.หนองบัวลำภู</div>
+    <div class="field">
+      <label>ชื่อผู้ใช้</label>
+      <input type="text" id="loginUser" placeholder="เช่น ARG001">
+    </div>
+    <div class="field">
+      <label>รหัสผ่าน</label>
+      <input type="password" id="loginPass" placeholder="กรอกรหัสผ่าน" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div class="app" id="app">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">🌾</div>
+      <div class="topbar-title">
+        <h1>กรอกข้อมูล Roadmap เกษตรเพิ่มมูลค่า</h1>
+        <p>จังหวัดหนองบัวลำภู • ปีงบประมาณ 2568–2569</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip">
+        <span id="dispUser"></span>
+        <span class="chip-role" id="dispRole"></span>
+      </div>
+      <button class="btn-logout-top" onclick="doLogout()">ออกจากระบบ</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="link-dashboard">
+      <a href="roadmap_dashboard.html" target="_blank">📊 เปิดแดชบอร์ดนำเสนอ</a>
+    </div>
+
+    <div class="last-saved" id="lastSaved"></div>
+
+    <!-- STRATEGY FORMS -->
+    <div id="formContainer"></div>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-panel" id="adminPanel">
+      <h3>⚙️ จัดการผู้ใช้งาน (Admin Only)</h3>
+      <table class="admin-table">
+        <thead><tr><th>ชื่อผู้ใช้</th><th>รหัสผ่าน</th><th>หน่วยงาน</th><th>สิทธิ์</th><th></th></tr></thead>
+        <tbody id="adminUserList"></tbody>
+      </table>
+      <button class="btn-add" onclick="addUser()">+ เพิ่มผู้ใช้ใหม่</button>
+      <div style="margin-top:12px">
+        <button class="btn btn-primary" onclick="saveUsersToSheet()">💾 บันทึกรายชื่อผู้ใช้</button>
+      </div>
+    </div>
+
+    <div class="footer-entry">
+      ผู้จัดทำและดูแลระบบ: <span>สำนักงานสถิติจังหวัดหนองบัวลำภู</span><br>
+      สำนักงานสถิติแห่งชาติ กระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม
+    </div>
+  </div>
+
+  <!-- STICKY ACTIONS -->
+  <div class="actions-sticky">
+    <button class="btn btn-primary" onclick="saveToSheet()">💾 บันทึกลง Google Sheet</button>
+    <button class="btn btn-gold" onclick="exportCSV()">📥 ส่งออก CSV</button>
+    <button class="btn btn-admin" id="btnAdmin" style="display:none" onclick="toggleAdmin()">⚙️ จัดการผู้ใช้</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-entry" id="toast"></div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const APPS_SCRIPT_URL = '%%APPS_SCRIPT_URL%%';
+
+// ============================================================
+// STRATEGIES & KPI MODEL
+// ============================================================
+const STRATEGIES = [
+  {
+    id: 'S1', num: 1,
+    title: 'ส่งเสริมและยกระดับการผลิตสู่มาตรฐานเกษตรมูลค่าสูง',
+    agency: 'สำนักงานเกษตรและสหกรณ์จังหวัดหนองบัวลำภู',
+    period: '1 ต.ค. 2567 – 30 ก.ย. 2569',
+    kpis: [
+      { id:'s1k1', name:'มูลค่าสินค้าเกษตรที่ได้รับมาตรฐาน (PGS, GAP, Organic, GI)', target:'เพิ่มขึ้น ≥5% ต่อปี', unit:'บาท' },
+      { id:'s1k2', name:'จำนวนกลุ่มเกษตรกรที่ได้รับการรับรองมาตรฐาน', target:'เพิ่มขึ้น ≥5% ต่อปี', unit:'กลุ่ม' }
+    ]
+  },
+  {
+    id: 'S2', num: 2,
+    title: 'การแปรรูปและสร้างมูลค่าเพิ่ม',
+    agency: 'สำนักงานพัฒนาชุมชนจังหวัดหนองบัวลำภู',
+    period: '1 ต.ค. 2567 – 30 ก.ย. 2569',
+    kpis: [
+      { id:'s2k1', name:'มูลค่าผลิตภัณฑ์แปรรูป', target:'เพิ่มขึ้น ≥5% ต่อปี', unit:'บาท' },
+      { id:'s2k2', name:'จำนวนผู้ประกอบการที่ได้รับการถ่ายทอดเทคโนโลยีแปรรูป', target:'เพิ่มขึ้น ≥5% ต่อปี', unit:'ราย' },
+      { id:'s2k3', name:'จำนวนผลิตภัณฑ์แปรรูปที่ได้รับมาตรฐานออกสู่ตลาด', target:'เพิ่มขึ้น ≥5% ต่อปี', unit:'ผลิตภัณฑ์' }
+    ]
+  },
+  {
+    id: 'S3', num: 3,
+    title: 'การพัฒนาการตลาดและสร้างแบรนด์',
+    agency: 'สำนักงานพาณิชย์จังหวัดหนองบัวลำภู',
+    period: '1 ต.ค. 2567 – 30 ก.ย. 2568',
+    kpis: [
+      { id:'s3k1', name:'มูลค่าการจำหน่าย', target:'เพิ่มขึ้น ≥10% ต่อปี', unit:'บาท' },
+      { id:'s3k2', name:'จำนวนผลิตภัณฑ์ที่ยื่นขอใช้ตรา Nong Bua Lamphu Brand', target:'≥15% ต่อปี', unit:'ผลิตภัณฑ์' },
+      { id:'s3k3', name:'ความพึงพอใจผู้บริโภคต่อ Nong Bua Lamphu Brand', target:'≥90%', unit:'%' }
+    ]
+  },
+  {
+    id: 'S4', num: 4,
+    title: 'การสร้างความเข้มแข็งให้เกษตรกรและสถาบันเกษตร',
+    agency: 'สำนักงานเกษตรจังหวัดหนองบัวลำภู',
+    period: '1 ต.ค. 2567 – 30 ก.ย. 2568',
+    kpis: [
+      { id:'s4k1', name:'จำนวนเกษตรกรต้นแบบ', target:'เพิ่มขึ้น ≥5% ต่อปี', unit:'ราย' },
+      { id:'s4k2', name:'สัดส่วนวิสาหกิจชุมชนศักยภาพระดับดี', target:'≥35.6% ของฐานเดิม', unit:'%' },
+      { id:'s4k3', name:'สัดส่วนสหกรณ์เกษตรเข้มแข็งระดับ 1-2', target:'≥10%', unit:'%' }
+    ]
+  }
+];
+
+const MONTHS = ['ต.ค.67','พ.ย.67','ธ.ค.67','ม.ค.68','ก.พ.68','มี.ค.68','เม.ย.68','พ.ค.68','มิ.ย.68','ก.ค.68','ส.ค.68','ก.ย.68','ต.ค.68','พ.ย.68','ธ.ค.68','ม.ค.69','ก.พ.69','มี.ค.69','เม.ย.69','พ.ค.69','มิ.ย.69','ก.ค.69','ส.ค.69','ก.ย.69'];
+
+let currentUser = null;
+let allData = {};
+
+// ============================================================
+// USERS
+// ============================================================
+let users = JSON.parse(localStorage.getItem('agri_users') || 'null') || [
+  { username: 'ARG001', password: '039001', role: 'admin', agency: 'ผู้ดูแลระบบ' },
+  { username: 'ARG002', password: '039002', role: 'user', agency: 'สำนักงานเกษตรและสหกรณ์จังหวัดหนองบัวลำภู' },
+  { username: 'ARG003', password: '039003', role: 'user', agency: 'สำนักงานพัฒนาชุมชนจังหวัดหนองบัวลำภู' },
+  { username: 'ARG004', password: '039004', role: 'user', agency: 'สำนักงานพาณิชย์จังหวัดหนองบัวลำภู' },
+  { username: 'ARG005', password: '039005', role: 'user', agency: 'สำนักงานเกษตรจังหวัดหนองบัวลำภู' }
+];
+
+function saveUsersLocal() { localStorage.setItem('agri_users', JSON.stringify(users)); }
+
+// ============================================================
+// AUTH
+// ============================================================
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value.trim();
+  if (!u || !p) { document.getElementById('loginError').textContent = 'กรุณากรอกข้อมูลให้ครบ'; return; }
+  const found = users.find(x => x.username === u && x.password === p);
+  if (!found) { document.getElementById('loginError').textContent = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'; return; }
+  currentUser = found;
+  enterApp();
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginError').textContent = '';
+}
+
+function enterApp() {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  document.getElementById('dispUser').textContent = currentUser.username + ' • ' + currentUser.agency;
+  document.getElementById('dispRole').textContent = currentUser.role === 'admin' ? 'ADMIN' : 'USER';
+  document.getElementById('btnAdmin').style.display = currentUser.role === 'admin' ? 'inline-flex' : 'none';
+  loadData();
+  buildForms();
+}
+
+// ============================================================
+// BUILD FORMS — filter by agency
+// ============================================================
+function getVisibleStrategies() {
+  if (currentUser.role === 'admin') return STRATEGIES;
+  return STRATEGIES.filter(s => s.agency === currentUser.agency);
+}
+
+function buildForms() {
+  const container = document.getElementById('formContainer');
+  const visible = getVisibleStrategies();
+
+  if (visible.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted)">ไม่พบยุทธศาสตร์ที่อยู่ในความรับผิดชอบของหน่วยงานคุณ</div>';
+    return;
+  }
+
+  container.innerHTML = visible.map(s => {
+    const kpiHTML = s.kpis.map((k, i) => {
+      const d = allData[k.id] || {};
+      const pct = d.pctChange || 0;
+      const pctClass = pct < 0 ? 'computed negative' : 'computed';
+      const pctDisplay = d.baseline && d.cumulVal ? (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%' : '-';
+      return `
+      <div class="kpi-entry">
+        <div class="kpi-entry-header">
+          <span class="kpi-badge">KPI ${i+1}</span>
+          <span class="kpi-name">${k.name}</span>
+          <span class="kpi-target-label">${k.target}</span>
+        </div>
+        <div class="kpi-fields">
+          <div class="kpi-field">
+            <label>ฐานเดิม (ผลงานเดิม)</label>
+            <input type="number" id="base_${k.id}" value="${d.baseline||''}" placeholder="0" oninput="calc('${k.id}')">
+          </div>
+          <div class="kpi-field">
+            <label>ผลงานรอบเดือน</label>
+            <input type="number" id="mval_${k.id}" value="${d.monthVal||''}" placeholder="0">
+          </div>
+          <div class="kpi-field">
+            <label>หน่วยนับ</label>
+            <input type="text" id="munit_${k.id}" value="${d.monthUnit||k.unit}" placeholder="${k.unit}">
+          </div>
+          <div class="kpi-field">
+            <label>ผลงานสะสม</label>
+            <input type="number" id="cval_${k.id}" value="${d.cumulVal||''}" placeholder="0" oninput="calc('${k.id}')">
+          </div>
+          <div class="kpi-field">
+            <label>% เพิ่ม/ลด จากฐาน</label>
+            <input type="text" id="pct_${k.id}" class="${pctClass}" value="${pctDisplay}" readonly>
+          </div>
+          <div class="kpi-field">
+            <label>เดือนที่รายงาน</label>
+            <select id="month_${k.id}">
+              <option value="">-- เลือก --</option>
+              ${MONTHS.map(m => `<option value="${m}" ${d.reportMonth===m?'selected':''}>${m}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">${s.num}</div>
+        <div class="section-info">
+          <h3>${s.title}</h3>
+          <p>📅 ${s.period}</p>
+        </div>
+        <div class="section-agency">${s.agency}</div>
+      </div>
+      ${kpiHTML}
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// CALC % CHANGE
+// ============================================================
+function calc(kpiId) {
+  const base = parseFloat(document.getElementById('base_' + kpiId)?.value) || 0;
+  const cumul = parseFloat(document.getElementById('cval_' + kpiId)?.value) || 0;
+  const pctEl = document.getElementById('pct_' + kpiId);
+
+  let pct = 0;
+  if (base > 0) pct = ((cumul - base) / base) * 100;
+
+  if (pctEl) {
+    const display = base > 0 ? (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%' : '-';
+    pctEl.value = display;
+    pctEl.className = 'kpi-field ' + (pct < 0 ? 'computed negative' : 'computed');
+  }
+
+  // Update in-memory
+  if (!allData[kpiId]) allData[kpiId] = {};
+  allData[kpiId].pctChange = pct;
+  saveLocal();
+}
+
+// ============================================================
+// DATA PERSISTENCE
+// ============================================================
+function collectFormData() {
+  STRATEGIES.forEach(s => {
+    s.kpis.forEach(k => {
+      const baseEl = document.getElementById('base_' + k.id);
+      if (!baseEl) return; // not visible
+      const base = parseFloat(baseEl.value) || 0;
+      const cumul = parseFloat(document.getElementById('cval_' + k.id)?.value) || 0;
+      let pct = 0;
+      if (base > 0) pct = ((cumul - base) / base) * 100;
+      allData[k.id] = {
+        baseline: baseEl.value || '',
+        monthVal: document.getElementById('mval_' + k.id)?.value || '',
+        monthUnit: document.getElementById('munit_' + k.id)?.value || '',
+        cumulVal: document.getElementById('cval_' + k.id)?.value || '',
+        cumulUnit: document.getElementById('munit_' + k.id)?.value || '',
+        pctChange: pct,
+        reportMonth: document.getElementById('month_' + k.id)?.value || ''
+      };
+    });
+  });
+  saveLocal();
+}
+
+function saveLocal() { localStorage.setItem('agri_data', JSON.stringify(allData)); }
+function loadData() {
+  const s = localStorage.getItem('agri_data');
+  if (s) allData = JSON.parse(s);
+}
+
+// ============================================================
+// SAVE TO GOOGLE SHEETS
+// ============================================================
+function saveToSheet() {
+  collectFormData();
+  if (APPS_SCRIPT_URL === '%%APPS_SCRIPT_URL%%') { toast('⚠️ กรุณาตั้งค่า APPS_SCRIPT_URL ก่อน', true); return; }
+
+  const rows = [];
+  STRATEGIES.forEach(s => {
+    s.kpis.forEach(k => {
+      const d = allData[k.id] || {};
+      rows.push({
+        strategy: 'ยุทธศาสตร์ที่ ' + s.num,
+        strategyName: s.title,
+        agency: s.agency,
+        kpiName: k.name,
+        target: k.target,
+        baseline: d.baseline || '',
+        monthVal: d.monthVal || '',
+        monthUnit: d.monthUnit || '',
+        cumulVal: d.cumulVal || '',
+        cumulUnit: d.cumulUnit || '',
+        pctChange: d.pctChange || 0,
+        reportMonth: d.reportMonth || '',
+        reportedBy: currentUser?.username || '',
+        timestamp: new Date().toLocaleString('th-TH')
+      });
+    });
+  });
+
+  fetch(APPS_SCRIPT_URL + '?action=saveKPI', {
+    method: 'POST', mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ rows })
+  }).then(() => {
+    toast('✅ บันทึกข้อมูลลง Google Sheet สำเร็จ');
+    document.getElementById('lastSaved').textContent = '💾 บันทึกล่าสุด: ' + new Date().toLocaleString('th-TH');
+  }).catch(err => {
+    toast('❌ เกิดข้อผิดพลาด: ' + err.message, true);
+  });
+}
+
+// ============================================================
+// EXPORT CSV
+// ============================================================
+function exportCSV() {
+  collectFormData();
+  let csv = '\uFEFF';
+  csv += 'ยุทธศาสตร์,ชื่อยุทธศาสตร์,หน่วยงาน,ตัวชี้วัด,เป้าหมาย,ฐานเดิม,ผลงานรอบเดือน,หน่วย,ผลงานสะสม,%เปลี่ยนแปลง,เดือนรายงาน\n';
+  const visible = getVisibleStrategies();
+  visible.forEach(s => {
+    s.kpis.forEach(k => {
+      const d = allData[k.id] || {};
+      csv += `"ยุทธศาสตร์ที่ ${s.num}","${s.title}","${s.agency}","${k.name}","${k.target}","${d.baseline||''}","${d.monthVal||''}","${d.monthUnit||''}","${d.cumulVal||''}","${d.pctChange||0}","${d.reportMonth||''}"\n`;
+    });
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'กรอกข้อมูล_Roadmap_เกษตร_หนองบัวลำภู.csv';
+  link.click();
+  toast('📥 ส่งออก CSV สำเร็จ');
+}
+
+// ============================================================
+// ADMIN
+// ============================================================
+function toggleAdmin() { document.getElementById('adminPanel').classList.toggle('show'); renderAdmin(); }
+
+function renderAdmin() {
+  document.getElementById('adminUserList').innerHTML = users.map((u, i) => `<tr>
+    <td><input value="${u.username}" onchange="users[${i}].username=this.value"></td>
+    <td><input value="${u.password}" onchange="users[${i}].password=this.value"></td>
+    <td><input value="${u.agency}" onchange="users[${i}].agency=this.value"></td>
+    <td><select onchange="users[${i}].role=this.value">
+      <option value="user" ${u.role==='user'?'selected':''}>User</option>
+      <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+    </select></td>
+    <td><button class="btn-sm btn-del" onclick="delUser(${i})">ลบ</button></td>
+  </tr>`).join('');
+}
+
+function addUser() { users.push({ username:'', password:'', role:'user', agency:'' }); renderAdmin(); }
+function delUser(i) {
+  if (users[i].username === currentUser.username) { toast('ไม่สามารถลบตัวเองได้', true); return; }
+  users.splice(i, 1); renderAdmin();
+}
+function saveUsersToSheet() { saveUsersLocal(); toast('✅ บันทึกรายชื่อผู้ใช้สำเร็จ'); }
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg, isError) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast-entry show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast-entry', 3000);
+}
+</script>
+</body>
+</html>
